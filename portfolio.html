@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Tee — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14161b;
+    --panel: #1b1e25;
+    --panel-border: #2b2f3a;
+    --panel-border-hover: #3d4354;
+    --text: #e7e9ee;
+    --text-dim: #949cac;
+    --text-faint: #656d80;
+    --accent-blue: #5b9dff;
+    --accent-amber: #e8a659;
+    --sans: 'Space Grotesk', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 3px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    border-bottom: 1px solid var(--panel-border);
+    position: sticky;
+    top: 0;
+    background: rgba(20, 22, 27, 0.92);
+    backdrop-filter: blur(6px);
+    z-index: 10;
+  }
+  nav .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
+  nav .name {
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+  }
+  nav .links { display: flex; gap: 22px; font-family: var(--mono); font-size: 13.5px; }
+  nav .links a { color: var(--text-dim); }
+  nav .links a:hover { color: var(--accent-blue); text-decoration: none; }
+
+  /* ---------- Hero ---------- */
+  header.hero { padding: 88px 0 64px; }
+  header.hero .kicker {
+    font-family: var(--mono);
+    font-size: 13.5px;
+    color: var(--accent-amber);
+    margin-bottom: 14px;
+  }
+  header.hero h1 {
+    font-size: 46px;
+    line-height: 1.1;
+    margin: 0 0 18px;
+    font-weight: 700;
+  }
+  header.hero p.lede {
+    font-size: 17.5px;
+    color: var(--text-dim);
+    max-width: 540px;
+    margin: 0 0 28px;
+  }
+  header.hero .links { display: flex; gap: 20px; font-family: var(--mono); font-size: 14px; }
+
+  /* ---------- Section shells ---------- */
+  section { padding: 56px 0; border-top: 1px solid var(--panel-border); }
+  section h2 {
+    font-size: 24px;
+    margin: 0 0 32px;
+    font-weight: 600;
+  }
+
+  /* ---------- Project panels ---------- */
+  .project {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+  .project:hover { border-color: var(--panel-border-hover); }
+
+  .thumb {
+    height: 190px;
+    position: relative;
+    background:
+      repeating-linear-gradient(45deg, #24272e, #24272e 16px, #1a1c22 16px, #1a1c22 32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .thumb .placeholder-label {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: #cfd3dc;
+    background: rgba(20, 22, 27, 0.82);
+    border: 1px dashed #4a5164;
+    border-radius: 4px;
+    padding: 8px 14px;
+    text-align: center;
+    max-width: 80%;
+  }
+
+  .project-body { padding: 22px 24px 24px; }
+  .project-body h3 {
+    font-size: 19px;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  .project-meta {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-faint);
+    margin-bottom: 14px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    border: 1px solid var(--panel-border);
+    border-radius: 4px;
+    padding: 3px 9px;
+  }
+  .project-body ul { margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 15px; }
+  .project-body li { margin-bottom: 6px; }
+  .project-body li::marker { color: var(--accent-blue); }
+
+  /* ---------- Experience ---------- */
+  .exp-entry {
+    border-left: 2px solid var(--panel-border);
+    padding-left: 20px;
+    position: relative;
+  }
+  .exp-entry::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+  }
+  .exp-entry h3 { font-size: 18px; margin: 0 0 4px; font-weight: 600; }
+  .exp-meta { font-family: var(--mono); font-size: 12.5px; color: var(--text-faint); margin-bottom: 12px; }
+  .exp-entry ul { margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 15px; }
+  .exp-entry li { margin-bottom: 6px; }
+  .exp-entry li::marker { color: var(--accent-amber); }
+
+  /* ---------- About / Skills ---------- */
+  .about-text { color: var(--text-dim); font-size: 16px; max-width: 600px; margin-bottom: 32px; }
+
+  .skill-group { margin-bottom: 20px; }
+  .skill-group .label { font-family: var(--mono); font-size: 12.5px; color: var(--text-faint); margin-bottom: 8px; }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-chips .tag { color: var(--text); }
+
+  /* ---------- Contact / Footer ---------- */
+  footer { padding: 56px 0 72px; border-top: 1px solid var(--panel-border); }
+  footer h2 { font-size: 24px; margin: 0 0 14px; font-weight: 600; }
+  footer p { color: var(--text-dim); font-size: 15.5px; margin: 0 0 20px; max-width: 480px; }
+  .contact-list { display: flex; flex-direction: column; gap: 8px; font-family: var(--mono); font-size: 15px; }
+  .foot-note { margin-top: 40px; color: var(--text-faint); font-size: 13px; font-family: var(--mono); }
+
+  @media (max-width: 620px) {
+    header.hero h1 { font-size: 34px; }
+    nav .links { gap: 14px; }
+    header.hero { padding: 56px 0 44px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="name">Daniel Tee</div>
+    <div class="links">
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Interactive Media &amp; Game Development — SIT × DigiPen, expected 2028</div>
+    <h1>Daniel Tee</h1>
+    <p class="lede">I build the systems underneath games — engines, save data, and the occasional tabletop board game or electric vehicle. Currently studying Computer Science in Interactive Media &amp; Game Development.</p>
+    <div class="links">
+      <a href="mailto:t33daniel@gmail.com">t33daniel@gmail.com</a>
+      <a href="https://github.com/DTeeMZ" target="_blank" rel="noopener">github.com/DTeeMZ</a>
+    </div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+
+    <div class="project">
+      <div class="thumb">
+        <div class="placeholder-label">Replace with: Tremare gameplay screenshot or engine editor view</div>
+      </div>
+      <div class="project-body">
+        <h3>Tremare — 2D Metroidvania</h3>
+        <div class="project-meta">Custom C++ engine · Team of 8 (6 engineers, 2 UX/game designers)</div>
+        <div class="tags">
+          <span class="tag">C++</span>
+          <span class="tag">OpenGL</span>
+          <span class="tag">RapidJSON</span>
+          <span class="tag">Dear ImGui</span>
+        </div>
+        <ul>
+          <li>Built a custom game engine from scratch, using OpenGL for rendering and Dear ImGui for in-editor tooling.</li>
+          <li>Developed the serialization system covering level data, object creation, and save/load functionality.</li>
+          <li>Worked across a cross-functional team combining engineering and design to ship a playable metroidvania.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="thumb">
+        <div class="placeholder-label">Replace with: Tokyo Trend Times board, miniatures, or playtest photo</div>
+      </div>
+      <div class="project-body">
+        <h3>Tokyo Trend Times — Tabletop Board Game</h3>
+        <div class="project-meta">Physical board game with miniatures · Lead game designer</div>
+        <div class="tags">
+          <span class="tag">Game Design</span>
+          <span class="tag">Playtesting</span>
+          <span class="tag">Miniatures</span>
+        </div>
+        <ul>
+          <li>Led game design for a tabletop game built around Japanese streetwear culture, translating a niche theme into approachable mechanics.</li>
+          <li>Designed a continuous, non-grid-based movement system — a mechanic not otherwise seen in the module's project history — prioritizing rules simple enough for new players to pick up quickly.</li>
+          <li>Ran playtesting sessions and iterated on rules based on player feedback.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="thumb">
+        <div class="placeholder-label">Replace with: EV prototype build or CAD render photo</div>
+      </div>
+      <div class="project-body">
+        <h3>Electric Vehicle Prototype</h3>
+        <div class="project-meta">Robotics engineering team project</div>
+        <div class="tags">
+          <span class="tag">Autodesk Inventor</span>
+          <span class="tag">CAD</span>
+          <span class="tag">Machining</span>
+        </div>
+        <ul>
+          <li>Served as safety researcher and lead 3D modeler, designing components in CAD ahead of fabrication.</li>
+          <li>Machined multiple physical components as part of a cross-functional team, contributing to procurement and hands-on prototyping.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience</h2>
+    <div class="exp-entry">
+      <h3>Teaching Assistant — CSD2511: Introduction to Game Design</h3>
+      <div class="exp-meta">Singapore Institute of Technology · Summer Trimesters 2025 &amp; 2026</div>
+      <ul>
+        <li>Provided creative and design feedback to roughly 100 students per cohort on game concepts, mechanics, and player experience.</li>
+        <li>Evaluated and approved final student project submissions alongside course lecturers, applying consistent design-quality standards.</li>
+        <li>Served as TA for the module across two consecutive summer trimesters.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <h2>About</h2>
+    <p class="about-text">I'm a Computer Science student at the Singapore Institute of Technology, in a joint program with DigiPen Institute of Technology focused on Interactive Media and Game Development. Before this, I completed a diploma in Mechatronics and Robotics at Singapore Polytechnic — which is part of why my projects range from game engines to physical machines. I'm drawn to the systems side of things: what's running underneath a game, a board game's rules, or a vehicle's frame.</p>
+
+    <div class="skill-group">
+      <div class="label">Languages</div>
+      <div class="skill-chips"><span class="tag">C++</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="label">Graphics &amp; libraries</div>
+      <div class="skill-chips">
+        <span class="tag">OpenGL</span>
+        <span class="tag">RapidJSON</span>
+        <span class="tag">Dear ImGui</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="label">CAD</div>
+      <div class="skill-chips"><span class="tag">Autodesk Inventor</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="label">Domains</div>
+      <div class="skill-chips">
+        <span class="tag">Game Design</span>
+        <span class="tag">Game Engine Development</span>
+        <span class="tag">Serialization &amp; Save Systems</span>
+        <span class="tag">Mechanical Prototyping</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Get in touch</h2>
+    <p>Open to internship opportunities in game development and interactive systems. Reach out by email or find my code on GitHub.</p>
+    <div class="contact-list">
+      <a href="mailto:t33daniel@gmail.com">t33daniel@gmail.com</a>
+      <a href="https://github.com/DTeeMZ" target="_blank" rel="noopener">github.com/DTeeMZ</a>
+      <span style="color: var(--text-faint);">Singapore</span>
+    </div>
+    <div class="foot-note">Built by Daniel Tee · Last updated 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
